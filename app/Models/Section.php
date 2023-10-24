@@ -5,19 +5,20 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Review extends Model
+class Section extends Model
 {
     use HasFactory;
 
     protected $guarded = ['id'];
 
-    //Relacion uno a muchos inversa
-
-    public function user() {
-        return $this->belongsTo('App\Models\User');
+    //Relacion  uno a mucho
+    public function lessons() {
+        return $this->hasMany('App\Models\Lesson');
     }
 
-    public function  course() {
+     //Relacion uno a muchos inversas
+     public function course(){
         return $this->belongsTo('App\Models\Course');
     }
 }
+

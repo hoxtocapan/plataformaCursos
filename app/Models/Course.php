@@ -9,6 +9,8 @@ class Course extends Model
 {
     use HasFactory;
 
+    protected $guarded = ['id', 'status'];
+
     //Creando constantes
     const   BORRADOR = 1;
     const REVISION = 2;
@@ -17,6 +19,19 @@ class Course extends Model
     //Relación uno a muchos 
     public function reviews(){
         return $this->hasMany('App\Models\Review'); 
+    }
+
+    public function requirements() {
+        return $this->hasMany('App\Models\Requirement');
+    }
+    public function goals() {
+        return $this->hasMany('App\Models\Goal');
+    }
+    public function audiences() {
+        return $this->hasMany('App\Models\Audience');
+    }
+    public function sections() {
+        return $this->hasMany('App\Models\Section');
     }
 
     //Relacion uno a muchos inversa
@@ -39,6 +54,16 @@ class Course extends Model
     //Relación muchos a muchos
     public function students() {
         return $this->belongsToMany('App\Models\User');
+    }
+    
+    //Relaciones uno a uno polimorfica
+
+    public function image(){
+        return $this->morphOne('App\Models\Image', 'imageable');
+    }
+
+    public function lessons(){
+        return $this->hasManyThrough('App\Models\Lesson', 'App\Models\Section');
     }
 
 }
